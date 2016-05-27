@@ -1,0 +1,30 @@
+{
+  "name": "saltybot",
+  "version": "1.0.0",
+  "description": "The saltiest bot on Discord",
+  "main": "app.js",
+  "dependencies": {
+    "discord.js": "^7.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DrDyne/saltybot.git"
+  },
+  "keywords": [
+    "salty",
+    "discord",
+    "bot",
+    "node",
+    "js"
+  ],
+  "author": "r.chaumard@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DrDyne/saltybot/issues"
+  },
+  "homepage": "https://github.com/DrDyne/saltybot#readme"
+}
