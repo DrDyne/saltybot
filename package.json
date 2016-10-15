@@ -5,7 +5,8 @@
   "main": "app.js",
   "devDependencies": {},
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "start": "node app"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
   "homepage": "https://github.com/DrDyne/saltybot#readme",
   "dependencies": {
     "discord.js": "^9.3.0",
-    "superagent": "^2.3.0"
+    "node-rest-client": "^2.0.1",
+    "shortid": "^2.2.6"
   }
 }
