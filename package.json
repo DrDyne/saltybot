@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "The saltiest bot on Discord",
   "main": "app.js",
-  "dependencies": {
-    "discord.js": "^7.0.1"
-  },
   "devDependencies": {},
   "scripts": {
     "test": "npm test"
@@ -26,5 +23,9 @@
   "bugs": {
     "url": "https://github.com/DrDyne/saltybot/issues"
   },
-  "homepage": "https://github.com/DrDyne/saltybot#readme"
+  "homepage": "https://github.com/DrDyne/saltybot#readme",
+  "dependencies": {
+    "discord.js": "^9.3.0",
+    "superagent": "^2.3.0"
+  }
 }

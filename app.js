@@ -1,29 +1,21 @@
-var Discord = require('discord.js')
-var bot = new Discord.Client()
-var settings = require('./settings')
+"use strict";
+const settings = require('./settings')
+const Discord = require('discord.js')
+const Bot = require('./bot')
+const client = new Discord.Client()
 
-bot.on('ready', function () {
-	console.log(bot.username, '-', bot.id)
+var bot = new Bot(client)
+
+client.on('message', (message) => {
+  console.log('?', message.content)
+  bot.read(message)
+     .then(bot.reply(message))
+     .catch(console.error)
 })
 
-bot.on('message', function (user, userID, chan, message, event) {
-	console.log('message', message)
-	bot.sendMessage({to: chan, message: 'lol'})
-})
+console.log('connecting...')
+client.login(settings.token);
 
-bot.loginWithToken(settings.token)
-.then(function (token) {
-	console.log('logged in !', token);
-	console.log('joining...', settings.invite);
-
-	bot.joinServer(settings.invite)
-	.then(function () {
-		console.log('joined')
-	}, function () {
-		console.error('could not join')
-	})
-
-
-}, function couldNotLogin (err) {
-	console.log(err);
+client.on('ready', () => {
+  console.log('connected')
 })
