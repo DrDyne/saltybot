@@ -1,5 +1,4 @@
 "use strict";
-
 module.exports = class Message {
   constructor (type) {
     this.type = type

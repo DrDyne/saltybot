@@ -1,17 +1,18 @@
 "use strict";
 var shortid = require('shortid')
 
-var Message = require('./message')
+var Commands = require('./commands')
 var Conversations = require('./conversations')
+var Message = require('./message')
 
 var settings = require('../settings')
-var Commands = require('../commands')
 
 module.exports = class Bot {
   constructor (client) {
     console.log('assembling bot...')
     this.client = client
-    this.conversations = new Conversations()
+    this.name = client.user.username
+    this.conversations = new Conversations(settings, client.user)
     console.log('loading commands into memory')
     console.log(Commands)
     this.cmd = Commands
@@ -28,12 +29,24 @@ module.exports = class Bot {
       .catch(handleError)
     }
 
+    console.log(this.conversations)
+    if ( msg.isMentioned(this.client.user) )
+      return this.conversations.start(msg)
+      .then(() => null)
+    else if ( this.isConversation(msg) )
+      return this.conversations.update(msg)
+      .then(() => null)
+
     return Promise.reject()
 
     function handleError (err) {
       console.error(err)
       throw err
     }
+  }
+
+  isConversation (msg) {
+    return this.conversations.find(msg.author, msg.channel)
   }
 
   isCommand (command, msg) {
@@ -43,6 +56,8 @@ module.exports = class Bot {
 
   reply (msg) {
     return (answer) => {
+      if ( !answer ) return;
+
       if ( msg.channel ) msg.channel.sendMessage(answer)
       else msg.reply(answer)
     }

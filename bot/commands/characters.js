@@ -1,3 +1,10 @@
+/**
+  * .map(char => ({
+  *   id: char[0],
+  *   code: char[1],
+  *   name: char[2],
+  * }))
+**/
 module.exports = [
     [55, 'bay', 'Bayonetta'],
     [4, 'bow', 'Bowser'],

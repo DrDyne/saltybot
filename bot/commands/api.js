@@ -1,5 +1,5 @@
 "use strict";
-var settings = require('../settings')
+var settings = require('../../settings')
 var RestClient = require('node-rest-client').Client
 
 module.exports = class Api {
