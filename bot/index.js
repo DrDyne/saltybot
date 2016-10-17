@@ -24,18 +24,18 @@ module.exports = class Bot {
 
     if ( this.isCommand('get', msg) ) {
       var args = this.parseArgs('get', msg.content)
-      console.log('args... ', args)
       return this.cmd.get.player(args.id)
       .catch(handleError)
     }
 
-    console.log(this.conversations)
+    if ( this.isCommand('players', msg) ) {
+      return this.cmd.get.allPlayers()
+    }
+
     if ( msg.isMentioned(this.client.user) )
       return this.conversations.start(msg)
-      .then(() => null)
     else if ( this.isConversation(msg) )
       return this.conversations.update(msg)
-      .then(() => null)
 
     return Promise.reject()
 
@@ -63,7 +63,6 @@ module.exports = class Bot {
     }
   }
 
-
   get commands () {
     return [{
       name: 'ping',
@@ -80,13 +79,22 @@ module.exports = class Bot {
         exec: 'getPlayer', args: ['id'],
       }, {
         syntax: /get all players/,
-      exec: 'getAllPlayer', args: [],
+        exec: 'getAllPlayer', args: [],
       }, {
         syntax: /get (\w+)/,
         exec: 'getPlayer', args: ['id'],
       }, {
         syntax: /get/,
         exec: 'getAllPlayers', args: [],
+      }, {
+        syntax: /players/,
+        exec: 'getAllPlayers', args: [],
+      }, {
+        syntax: /char :(\w){3}:/,
+        exec: 'getChar', args: ['id'],
+      }, {
+        syntax: /char/,
+        exec: 'getAllChars', args: [],
       }]
     }, {
       name: 'start',
