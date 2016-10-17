@@ -100,7 +100,7 @@ module.exports = class Conversations {
     if ( !Scenario ) throw 'No scenario for conversation'
     if ( !previous ) {
       let dialog = new Dialog(this.user, msg, Scenario)
-      console.log('new dialog with %s at %s', dialog.with, dialog.at)
+      console.log(`new dialog with ${dialog.with} at ${dialog.at}`)
 
       this.history.push({
         author: msg.author,
@@ -110,11 +110,11 @@ module.exports = class Conversations {
       return dialog.tick(msg)
 
     } else if ( !overridePreviousDialog ) {
-      console.log('chatting with %s', msg.author.username)
+      console.log(`chatting with ${msg.author.username}`)
       return previous.dialog.tick(msg)
 
     } else if ( overridePreviousDialog ) {
-      console.log('reseting conversation with %s', msg.author.username)
+      console.log(`reseting conversation with ${msg.author.username}`)
       let dialog = new Dialog(this.user, msg, Scenario)
       let previousIndex = this.findIndex(msg.author, msg.channel)
       this.history[previousIndex] = {
