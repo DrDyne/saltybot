@@ -1,5 +1,5 @@
 "use strict";
-class Dialog {
+module.exports = class Dialog {
   constructor (user, msg, Scenario) {
     if ( !Scenario ) throw 'Cannot create Dialog without Scenario'
     this.user = user
