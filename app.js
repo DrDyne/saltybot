@@ -15,7 +15,10 @@ client.on('ready', () => {
   client.on('message', (message) => {
     console.log('?', message.content)
     bot.read(message)
-       .then(bot.reply(message))
+       .then(bot.reply(message), (err) => {
+        console.error(err)
+        Promise.resolve()
+      })
        .catch(console.error.bind(null, '(╯°□°)╯︵ ┻━┻'))
   })
 

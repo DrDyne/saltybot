@@ -16,14 +16,14 @@ function getPlayer (name) {
   return api.get('/players')
   .then((Players) => {
     let Player = Players.find((p) => name === p.name)
-    let message1 = new Message('md')
-    message1.add('#' + Player.name)
-    message1.add('> salt: [' + Player.salt + ']')
-    message1.add('> Characters: ' + Player.played_characters.reduce((memo, id) => {
+    let answer = new Message({type: 'md'})
+    answer.add('#' + Player.name)
+    answer.add('> salt: [' + Player.salt + ']')
+    answer.add('> Characters: ' + Player.played_characters.reduce((memo, id) => {
       let char = Characters.find((c) => c.id === id)
       return memo.concat(char.name)
     }, []).join(', '))
-    return message1.toText()
+    return answer.toText()
   })
 }
 
@@ -32,14 +32,13 @@ function getAllPlayers () {
 
   return api.get('/players')
   .then((Players) => {
-    let message = new Message('md')
+    let answer = new Message({type: 'md'})
 
     Players.forEach((p) => {
-      message.add('+ ' + p.name)
-      message.add('|- salt: ' + p.salt)
+      answer.add('+ ' + p.name)
+      answer.add('|- salt: ' + p.salt)
     })
 
-    console.log(message, message.toString())
-    return message.toText()
+    return answer.toText()
   })
 }

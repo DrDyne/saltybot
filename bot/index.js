@@ -33,7 +33,10 @@ module.exports = class Bot {
     }
 
     if ( msg.isMentioned(this.client.user) )
-      return this.conversations.start(msg)
+      return new Promise((resolve, reject) => {
+        return this.conversations.start(msg)
+        .then(resolve, reject)
+      })
     else if ( this.isConversation(msg) )
       return this.conversations.update(msg)
 

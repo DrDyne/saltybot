@@ -22,22 +22,30 @@ class Dialog {
 
     if ( !this.started ) {
       this.started = true
-      let args = [].concat(msg, this.parse(msg.cleanContent, this.currentNode))
-      return this.currentNode.trigger.apply(this, args)
+      let args = this.parse(msg.cleanContent, this.currentNode)
+      return this.currentNode.trigger(msg, args)
+
     } else  {
-      let node;
+      let node; // dialog node containing a syntax matching user input
       let validAnswer = this.currentNode.answers.find((answer) => {
-        node = this.scenario.find((s) => s.id === answer)
+        node = this.scenario.find((s) => s.id === answer) // find node
         return node && this.parse(msg.content, node)
       })
 
       if ( !validAnswer ) return Promise.resolve()
 
       this.currentNode = node
-      console.log('new node')
-      console.log(this.currentNode)
-      let args = [].concat(msg, this.parse(msg.cleanContent, this.currentNode))
-      return this.currentNode.trigger.apply(this, args)
+      let args = this.parse(msg.cleanContent, this.currentNode)
+
+      return this.currentNode.trigger(msg, args)
+      .then((response) => {
+        if ( !this.currentNode.answers ) { // last node, end dialog
+          console.log('nothing to answer, ending dialog')
+          this.resolved = true;
+        }
+
+        return response
+      })
     }
   }
 
@@ -45,13 +53,10 @@ class Dialog {
     let args = content.match(scenarioNode.syntax)
     if ( !args ) return null
 
-    args.shift()
-    return args
-
-    //return scenarioNode.args.reduce((memo, name, index) => {
-    //  memo[name] = args[index+1]
-    //  return memo
-    //}, {})
+    return scenarioNode.args.reduce((memo, name, index) => {
+      memo[name] = args[index+1]
+      return memo
+    }, {})
   }
 }
 
@@ -134,6 +139,7 @@ module.exports = class Conversations {
   clear (msg) {
     if ( !msg ) return this.history = []
 
+    console.log(`ending conversation with ${msg.author} in channel: ${msg.channel}`)
     let index = this.findIndex(msg.author, msg.channel)
     this.history.splice(index, 1)
   }
