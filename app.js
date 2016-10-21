@@ -10,7 +10,7 @@ client.login(settings.token);
 client.on('ready', () => {
   var bot = new Bot(client, settings)
   console.log('(ಠ_ಠ)/ sup\' bb?')
-  console.log('- %s', bot.name)
+  console.log(`- ${bot.name}`)
 
   client.on('message', (message) => {
     console.log('?', message.content)

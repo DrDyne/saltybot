@@ -15,7 +15,7 @@ module.exports = class Api {
 
   get (path) {
     return new Promise((resolve, reject) => {
-      console.log('GET %s%s', settings.api.url, path)
+      console.log(`GET ${settings.api.url}${path}`)
       this.io.get(settings.api.url + path, (data, res) => {
         console.log(res.statusCode)
         if ( 404 === res.statusCode ) reject(404)
